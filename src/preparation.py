@@ -61,11 +61,11 @@ def normalise_features():
 
     # print(originalDataFrame.info())
     # print(originalDataFrame.head(n=20))
-    # NOTE TO SELF: I could have passed the categorical features as well... it would've worked... sigh...
+    # NOTE TO SELF: I could have passed the categorical features as well... it should've worked... sigh...
 
 
 # using non float/int variables with linear regression causes a ValueError. I am certain there is a way to
-# include categorical features (or perhaps a different regression that allows it) so this is a stopgap. TODO
+# include categorical features (or perhaps a different regression that allows it) so this is a stopgap.
 # Male is 0, Female is 1
 # X Y Z -> 0.33, 0.66, 0.99
 def convert_categorical():

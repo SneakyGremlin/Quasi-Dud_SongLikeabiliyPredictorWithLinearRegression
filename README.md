@@ -10,9 +10,15 @@ The features used should illustrate why.
 
 I could not classify the song based on pre-existing genres (except indie/alternate) so I coin the term "Emotionally-Charged-Operatic-Arias": Operatic and Arias since the primary focus is not on the background/complementary music but rather on the vocals of the singer themself.
 
-> Relationship Level can be translated to Sentiment (on the artist); I use "Relationship Level" since the artist is me.
+> Relationship Level can be (with qualifications) translated to Sentiment (on the artist); I use "Relationship Level" since the artist is me.
 
-> **I reiterate the song was sung by me**
+> **I reiterate the song was sung by me. Please use headphones for the best experience and use the SoundCloud link 
+> (found inside "Notes on Data Attributes/Features: (How much they) Liked the song (Dependent Response Variable)) because I 
+> don't trust compression algorithms (almost a joke).
+> (I will also mention *most* of the "flaws" are flaws I am aware of; I included them for the sake of the project :)**
+
+> If you get tired of skimming through the entire README.md owing to a characteristic of the project, be so kind as to do me a service
+> and read the "Footnote/Coming Clean". 
 
 ---
 
@@ -55,7 +61,7 @@ All data collected is data that is
 
 ---
 
-## Data Collection Methodology: Exposition, Arguments, and a Justification TODO
+## Data Collection Methodology: Exposition, Arguments, and a Justification
 
 ### Exposition
 All participants are individuals I have had at least 2 hours of interactions with (this is an outlier lower bound, the actual bound is 10 hours on average). 
@@ -134,7 +140,7 @@ It was demeaning, it just ineffably was, and I was emotionally exhausted by the 
 already available (well I say this right now but who knows...)
 
 
-**The following is not intended to offend anyone, I based them on interactions I had and included them for your amusement. I do this because some of the feedback I got was VERY amusing.**
+**The following is not intended to offend anyone, I based them on interactions I had and included them for your amusement. I do this because some of the feedback I got was VERY amusing. I am aware I asked for their feedback but come on, don't we all don't have that inner snark? I hope this doesn't portray me as overly vain.**
 1. How important can ANYONE in my circle be that they can't spare ten minutes of their time for a **pleasant** task.
 2. Well I understand you're very busy, but maybe you can do me this small favour since I literally did our entire BIOL course project person xxx.
 3. Why does almost every girl think I'm trying to make advances? SHEESH. I know I ain't no Prince Charming but you don't gotta be Cruella. 
@@ -145,7 +151,7 @@ already available (well I say this right now but who knows...)
 8. "There are voice cracks and the voice vibrates": THAT IS A SKILL IT TOOK ME MONTHS TO REFINE. 
 9. (this one's a bit esoteric) "This doesn't qualify as Hindi-inspired since there are no Raagas": O musician extraordinaire do you not know that given that there were 200 thaats initally and a gazillion ragas can be made from just one, ALL MUSIC can be said to have flavours of hindi music (this is a qualified statement).
 10. Fine read-zone me, I never liked you anyway (as I cry internally).
-11. I mean you said you'll do it, so why do I gotta ask you for the tenth time: your hippocampus dislocated? (this person is a close friend, I think you can badger your close friends) 
+11. I mean you said you'll do it, so why do I gotta ask you for the tenth time: your hippocampus dislocated? (this person is a close friend, I think you can badger your close friends). 
 
 I've now said it. Thank you Universe :).
 
@@ -190,7 +196,7 @@ n.b.b. The time period suggests positive interactions; I could have spent days w
 #### \> Musical Aptitude 
 Bounded (qualifiedly: values that are means are allowed (ref caveat above)) discrete attribute: [0, 3]:
 1. 0 means no knowledge about music whatsoever (i.e. the theory behind it)
-2. 0.5 is a default value when data is insufficient; justification is hopefully "overlooked" savants are balanced out (pseudo-justification). TODO !!! Replace this value with a 0 
+2. 0.5 is a default value when data is insufficient; justification is hopefully "overlooked" savants are balanced out (pseudo-justification).
 3. 1 means basic knowledge; dilettante guitarists/vocalists etc
 4. 2 means sufficient knowledge/skill to be considered good by the uninitiated.
 5. 3 means mastery. 
@@ -257,29 +263,90 @@ This is a measure of how much they liked the song. The scale used is copied here
 5. 4.5 when I vacillate b/w 4 and 5.
 6. 5 Gobsmacked (could be taciturn (this part is a bit iffy in all honesty, maybe they just wish to terminate the interaction?: no way to account for this except gut feeling and three-day method) or gushing).
 
-**No participant was absolutely repulsed by the song**. (This may appear narcissistic, so for your own reference I provide a reference to the song used TODO).
+**No participant was absolutely repulsed by the song**. (This may appear narcissistic, so for your own reference I provide a reference to my unused [SoundCloud Account's upload](https://on.soundcloud.com/MKHX3uHGHfH7JsmY7) AND include the audiofile in the package.).
 
 **It bears mentioning that though the values in my training and testing dataset are "discrete", regression does not provide discrete outputs. Hence, response instead of class is used.**
 
-> I discuss the problem of class imbalance and outliers below in "Flaws". TODO 
+> I discuss the problem of class imbalance below in "Flaws/Mistakes". 
 
 ---
 
-## Exposition on Data Exploration TODO
+## Exposition on Data Exploration 
+This section details the implementation of the exploration module, "exploration.py".
 
-when both mean and median are >=0.5 has bearing 
-when one is, may have bearing 
-when both >0.1 <5 has minor
-when >0.1 <5 even one may have minor 
-when both <0.1 none
+It is not my intention to go into the specifics for adjudicating the relevance of the features, but rather to provide
+an overview of the methodology entailed and the criteria used. Much more detail is more appropriately found in the file 
+itself which I encourage you to explore.
+
+First comes the criteria; the function names reflect what I concluded about the feature:
+1. when both mean and median are >=0.5 has bearing (on response)
+2. when one of mean and median is, may have bearing 
+3. when both of mean and median are >0.1 and <5 has minor bearing
+4. when one of mean and median is >0.1 and <5  may have minor 
+5. when both of mean and median are <0.1 there is no bearing. 
+
+From the above it might appear that mean and median are the only features I consider; this is not the case, for an example,
+refer to the Insight about "Relationship Level" and response that was made possible with the box plot (among many other 
+interspersed such insights). 
+
+There is a chink, I wish to address here: my dataset was plagued by heavy class imbalance. My solution to this issue was
+either finding a turning point in the distribution for numerical values (e.g. "Sensibilities") and using two different 
+groups of participants which fell within a specified range, or using a dataframe's .sample() function and calculating an 
+average value using iteration (I may have done both in some cases). I chose this method owing to the paucity of the data:
+I had no recourse; I could have taken the descriptive statistics (mean and median) or used a box plot and taken the values 
+prima facie but I wished to err on the side of caution. This to me seemed the best solution at the time.
+ 
+The mean and median aggregates were important yes, however each function (which explores a feature) is rife with graphs 
+and plots, and follow a logical format: consider them an argument since that is how they are written (with the comments 
+expounding on the code).
+
+And so a combination of invocations, aggregations, and visualizations was used to determine the relevance of each feature. 
 
 ---
 
-## Exposition on Data Preparation TODO
+## Exposition on Data Preparation 
+This section expounds on the preparation module, "preparation.py" of this project.
+
+After the data is explored, the data is prepped using min-max normalisation. Z-score was not used since it wouldn't have 
+made intuitive sense for some of the Features (imagine having negative intelligence). This argument is flimsy but I believe 
+it to be sufficient. The data also had no outliers which further justifies the use of normalisation. 
+
+As to why the data is normalised itself, the answer lies in the distribution of "Intelligence" and the difference in the numerical
+range of the numerical features:"Musical Affinity" starts at 0 and ends at 3, "Musical Aptitude starts at 1 and ends at 3",
+"Intelligence" and the Response are on a 5 scale. When I refer to the distribution of "Intelligence" I refer to the fact 
+that most of the values are >= 2.5 (and those that aren't are around the number). It doesn't make sense to have numbers at 
+the beginning that contribute nothing and serve only to confuse the model-to-be. This feature-scaling was thus done to 
+aid the model. 
+
+You may note that I convert the categorical features ("Sex" and "Age Demographic") to numerical values as well (and in such 
+a manner as if they were normalised). This is owing to the fact that a ValueError was raised for the String objects. Linear 
+Regression does require numbers after all.
+
+Finally, I use the stratified sampling based on the feature determined to be most relevant, "Age Demographic" to split 
+the data into training and test sets. 
+
 
 ---
 
-## Exposition on Modelling TODO
+## Exposition on Modelling 
+I do not wish to expound on this owing to the fact all models failed and failed so ludicrously that writing 
+each next line of code was akin to being smacked with a feather duster. 
+
+But I will do so anyway. 
+
+The modelling aspect of the project proceeds quite straightforwardly. A linear regression model is used (as has been indicated), 
+and thereafter the coefficeint of determination (r-squared), and mean-absolute-error were used to ascertain the accuracies 
+of the model.
+
+The models were based on the "insights" (the relevances of features) based on the exploration module. This was experimented with:
+you do not see all of the experimental models I constructed based on the exploration. There is one model that utilises all the features
+and there is another last-ditch model at the end which utilises just "Relationship Level". I could not for the life of me get 
+the coefficient of determination to be >0.1 (in some cases it was even negative...) or the mean-absolute error to be <0.18 (which
+really doesn't say anything seeing that the output range is [0,1]).
+
+And so seeing that the universe saw it fit to humble me, I was most assuredly humbled. I vacantly stared at my screen for 
+about a minute, shut my laptop and chose to drown my sorrows in mangoes.
+
 
 ---
 
@@ -288,7 +355,7 @@ Is not a classification problem; is a regression problem, so it seems fit to use
 
 Why I chose to use *Linear Regression* specifically, is simple: its the only algorithm I felt conversant in. To this end I 
 even based the properties in such a manner so as to have a linear relationship between the feature and the response, even if 
-that may not have existed. 
+they may not have existed. 
 
 
 > Reduction of the data attributes:
@@ -306,82 +373,76 @@ I wished to confirm it via data exploration. The criteria and my method for this
 3. Sensibility and emotional receptivity with age. 
 4. Music is a highly idiosyncratic. Preferences abound but maybe take preferences into account?
 5. Correlation b/w my scale of Intelligence and Sensibilities. 
-
-TODO:::: AT THE END OF ALL OF THIS MAKE A LIST OF ALL THE FEEDBACKS RECEIVED AND WORK ON THEM. 
-
-
+6. ...
 
 ---
  
-## Flaws 
-
-1. Class Imbalance (perhaps age has no correlation) Got no rizz :(<br/>
-   \> The collation of certain demographics was at my discretion.
-2. Data Collection Methodology has a (arguably acceptable margin of error).
-3. Should re-run simulations with the same data set by 
-   1. !!! removing redundant variables
-   2. Using a different machine learning algorithm
-
-class imbalance. resolution thereof and had to drop one entire variabel 
-data definition. 
-
----
-
-## What next
-logitic regression 
-better data 
-unsupervised model
-
----
-
-## Footnote 
-Imagine you're on an island...
-
----
-
-## Coming Clean :)
-genre specialiation, attractiveness, 
-
-Introduction of a new variable: aplomb/attractiveness.
-
-I ain't done python in a long time so no syntactic sugar.
-
-To show prediction of an artist's success is an impossible endevaour 
-Time for reflection with everyone and pruning people from my life 
-
-If I stand an actual chance.
-
-It was also to see if what I feel about other people is constant and the effect of ...
-So I could truly appreciate the efforts of data collectors and attempt to begin to understand linear regression,
+## Flaws/Mistakes 
+There are a plethora of flaws in this bootstrapped method of mine. Herein I mention a few. 
 
 
-
+1. Data collection methodology: I have been verbose enough concerning the "whys" and the "hows". Considering all that
+I still reiterate my concession: it was flawed. I relied too much on inference and eschewed the more conventional, tried-and-true
+methods. My decision to construct my own scales may have been erroneous also. This *may* have resulted in a dataset that was 
+in of itself twaddle, unworthy of being used to train a Machine Learning Algorithm. The solution of course would entail 
+using better metrics and more standardised data collection methods. 
+2. Assumption and obtrusion of Linearity: Linear Regression presupposes a linear correlation between the properties and the response 
+variable. It goes without saying it may very well be the case that linear correlations do not exist in my dataset and my attempts 
+at forcing linearity by devising my own scales (as mentioned elsewhere...) may have been unsuccessful. To this end 
+a different Machine Learning algorithm (specifically one that does not presuppose linearity) may be used (assuming the
+data is valid). I will not presume to possess the esoterica necessitated to name any. 
+3. Data definition: This coincides with "Data Collection Methodology". Conception of my own scales may have seemed vainglorious
+but rest assured it was done owing only to a lack of information. This *may* have been one of numerous chinks.
+4. Class imbalance: Assuming the data itself is "valid", it is predominantly characterised by class imbalance through and 
+through. I have specified already, the rigours I suffered collecting data so this should be predictable. I try to solve this problem
+via iteration and the Dataframe's `.sample()` method and using the median. Mayhap this was insufficient and a more statistically 
+rigorous solution was required. 
+5. Inexperience: I embarked on this enterprise after completing a single course () on LinkedIn Learning, proceeding 
+to read articles, researching topics I was unclear on, and exploring syntax and utility methods. It goes without saying, had
+I had more experience this entire project would have assumed a trajectory much more given to success and actionable insight.
+I do wish to say however, I do not regret **all** the time I invested and opportunities I forewent to see this to its fruition, 
+since I am now somewhat conversant in some of the fundamentals of Machine Learning and the tools utilised to implement the models.
+I also kinda relearned Python along the way so that's a plus. All in all, had the circumstances been different and had I the
+largesse of time required to hone my ML intuition, I am fairly certain, I would have succeeded: I have a track record of 
+excelling after failure after all :)
 
 ---
 
+## What next 
+I shall continue my journey, of course. At present there are certain prior affairs that necessitate my concerted attention. 
+I intend to resume this odyssey after their satisfactory termination. The topic this project revolves around is of particular 
+interest to me, so I shan't abandon it. Instead, I may attempt to convince my University to fund the research project after 
+demonstrating skill necessary to be entrusted a task I consider of import. This will mitigate against the Data Collection and 
+Definition debacle. The support of the minds at UBC will be instrumental in guiding my hand (or perhaps they may take the lead)
+and my edified intuition will buttress the enterprise. 
 
-!!!!!!!!!!!!!!!!!!!! TODO: is normalisation REQUIRED here? what do the values of the coefficients mean?
+If my university declines, I shall figure something out! I always have, will, and do: remember, the solution may not be one 
+that you want, but it does exist!
 
-!!!!!! Bananas
-!!!!!! Normalisation? 
+---
 
-!!! take money from baba 
-savoir faire 
-au courant 
-sensibilities
-liberal use of 
-onliging.
-seamless
-refine
-chorus 
+## Footnote/Coming Clean
+Here I merely express the context foregrounding this project. I took a plunge, a deep dive if you will, owing to certain 
+unforeseeable circumstances. Some of them are personal and damning and I shan't mention them but one I will mention is that 
+seeing that these projects are intended to showcase by abilities as an inchoate Computer Scientist, I wished to "shine" via
+exhibiting gumption and initiative (pardon the tautology). I acted in a hasty manner to this end. And what precipitated this 
+was the fact that I lost all my previous projects, since I foolishly placed my laptop inside my luggage on the flight back
+to my home country and to my dismay discovered upon retrieving it from the suitcase it was in dire straits (it wouldn't even 
+turn on). I had not used GitHub and the folders wherein the files were stored were not synced with my OneDrive. So yes, I attempted
+all this to somehow, be on par with those currently lost (but hopefully retrievable) projects of mine. I have an exam coming up 
+and as I mentioned some personal circumstances as well, hence there is the paucity of time. 
 
-medley of !!!
+If the above feels as if I wallow, I do not. I managed the set-up of the environment required to run the code I wrote (which
+is as any Computer Science student will tell you, betimes a painful process) poring through the Anaconda and Pycharm folders and 
+documentation; I learned Jupyter Notebook (not that hard, truth be told but there was the kernel issue I had to resolve); I 
+learned about a field I had little to no knowledge of, developed an intuition thereof and internalised the knowledge I gleaned
+via the LinkedIn course I mentioned and my own research; I doggedly collected data, became conversant in Excel, and defined 
+my attributes; I familiarised myself with the Pandas package; I relearned the syntax of an ENTIRE language; and I made something,
+something that does naught, but something that is a testament to my tenacity, if anything.
 
-TODO: provide an overview of the excel file layout; both of them 
+I knew from the get-go this may be a pipe-dream: I only wish to say now that this was all intended to be a demonstration
+of *me*. :)
 
+**This time: (PARTIAL) VENI VIDI VICI**
 
-
-# music 
->>>> sometimes the high pitches when held they crack
-
-god given talen 
+---

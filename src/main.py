@@ -17,8 +17,7 @@ def main():
     # this has been left empty on account of there being no viable model.
 
 
-# This Linear Regression model uses ALL the features that preparation indicates (the "classes"
-# are outlined in the README.md) !!!
+# This Linear Regression model uses ALL the features except "Participant"
 def model_all_except_participant():
     relevant = ['Age Demographic', 'Relationship Level',
                 'Musical Aptitude', 'Musical Affinity', 'Sensibilities', 'Intelligence',
@@ -47,7 +46,7 @@ def model_all_except_participant():
     # FAIL
 
 
-# This model removes all the variables that have no bearing (as outlined in "Exploration" TODO)
+# This model removes all the variables that have no bearing (as outlined in "Exploration")
 # alternatively it includes all the variables that have any bearing.
 def model_a():
     relevant = ['Age Demographic', 'Relationship Level',

@@ -289,7 +289,7 @@ def sex_may_have_minor_bearing_on_response():
     print(originalDataFrame["Sex"].value_counts(normalize=True))
     print(originalDataFrame["Sex"].value_counts())
     # as we can see ratio of men to women is ~4:1; this is a testament to the fact I got no rizz.
-    # finding the median of the women and the men. !!! check ratio was correct
+    # finding the median of the women and the men.
 
     print("\n")
 
@@ -370,7 +370,10 @@ def response_normalised_distribution():
     plt.show()
 
 
-# For further exploration TODO
+# ---------------------------------------------------------------
+# For further exploration
+
+
 def relationship_sensibility_intelligence():
     pass
 
@@ -381,7 +384,8 @@ def relationship_sensibility_intelligence():
 # here we take the user input. and show them a visualisation.
 def choose():
     global originalDataFrame
-    originalDataFrame = pd.read_excel("AliasedDataForAlgorithm.xlsx", sheet_name="data") # since some invks norm data
+    originalDataFrame = pd.read_excel("AliasedDataForAlgorithm.xlsx", sheet_name="data")
+    # this is done since some of the procedures invoke normalising functions.
     print("\n \n")
     global user_input
     print("Greetings, This is the data exploration module. It is intended to be used in the following manner: \n"
