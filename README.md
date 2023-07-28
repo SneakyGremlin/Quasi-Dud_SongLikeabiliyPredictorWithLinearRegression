@@ -438,7 +438,8 @@ documentation; I learned Jupyter Notebook (not that hard, truth be told but ther
 learned about a field I had little to no knowledge of, developed an intuition thereof and internalised the knowledge I gleaned
 via the LinkedIn course I mentioned and my own research; I doggedly collected data, became conversant in Excel, and defined 
 my attributes; I familiarised myself with the Pandas package; I relearned the syntax of an ENTIRE language; and I made something,
-something that does naught, but something that is a testament to my tenacity, if anything.
+something that does naught, but something that is a testament to my tenacity, if anything, all in less than a month managing a 
+modest plethora of other affairs.
 
 I knew from the get-go this may be a pipe-dream: I only wish to say now that this was all intended to be a demonstration
 of *me*. :)
