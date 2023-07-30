@@ -9,12 +9,12 @@ from preparation import normalise_intelligence
 # " <0.5 & >0.1 " = minor bearing.
 # " <0.1 = no bearing.
 
-originalDataFrame = pd.read_excel("AliasedDataForAlgorithm.xlsx", sheet_name="data")
+original_data_frame = pd.read_excel("AliasedDataForAlgorithm.xlsx", sheet_name="data")
 
 
 # to indicate that age has bearing on the Response (>0.5)
 def age_demographic_has_bearing_on_response():
-    print(originalDataFrame[["Age Demographic"]].value_counts())
+    print(original_data_frame[["Age Demographic"]].value_counts())
     print("\n")
     # We have class imbalance here: there are much more GenZs in comparison to the other designations
     # To work around this problem I randomly choose 11 (the difference b/w GenX and GenY is 2 thus the mean is)
@@ -25,8 +25,8 @@ def age_demographic_has_bearing_on_response():
     #       I ran this with the means as well and the results are in order X Y Z: 2.8, 3.3, 3.6 which still justifies
     #       the correlation
 
-    mask_gen_z = originalDataFrame["Age Demographic"] == "GenZ"
-    gen_z_df = originalDataFrame[mask_gen_z]
+    mask_gen_z = original_data_frame["Age Demographic"] == "GenZ"
+    gen_z_df = original_data_frame[mask_gen_z]
 
     total = 0
     for i in range(10):
@@ -34,8 +34,8 @@ def age_demographic_has_bearing_on_response():
 
     gen_z_average = total / 10
 
-    gen_y_average = originalDataFrame[originalDataFrame["Age Demographic"] == "GenY"][["Response"]].mean()[0]
-    gen_x_average = originalDataFrame[originalDataFrame["Age Demographic"] == "GenX"][["Response"]].mean()[0]
+    gen_y_average = original_data_frame[original_data_frame["Age Demographic"] == "GenY"][["Response"]].mean()[0]
+    gen_x_average = original_data_frame[original_data_frame["Age Demographic"] == "GenX"][["Response"]].mean()[0]
 
     print("The three averages are (in order X Y Z) " + str(gen_x_average) + " "
           + str(gen_y_average) + " " + str(gen_z_average) + "\n")  # 2.5, 3.5, 4.0
@@ -44,7 +44,7 @@ def age_demographic_has_bearing_on_response():
     # that was used)
 
     # I now use a comparison visualisation box plot:
-    originalDataFrame.pivot(columns="Age Demographic", values="Response").plot(kind="box")
+    original_data_frame.pivot(columns="Age Demographic", values="Response").plot(kind="box")
     plt.show()
 
 
@@ -70,13 +70,13 @@ def age_demographic_has_bearing_on_response():
 #           mitigates against that.
 def relationship_level_may_have_bearing_on_response():
     # setting up preliminary expectations.
-    originalDataFrame.plot(kind="scatter", x="Relationship Level", y="Response")
+    original_data_frame.plot(kind="scatter", x="Relationship Level", y="Response")
     plt.show()
 
-    mask_below_three = originalDataFrame["Relationship Level"] < 3
-    mask_above_and_including_three = originalDataFrame["Relationship Level"] >= 3
-    bt_df = originalDataFrame[mask_below_three]
-    at_df = originalDataFrame[mask_above_and_including_three]
+    mask_below_three = original_data_frame["Relationship Level"] < 3
+    mask_above_and_including_three = original_data_frame["Relationship Level"] >= 3
+    bt_df = original_data_frame[mask_below_three]
+    at_df = original_data_frame[mask_above_and_including_three]
 
     print(bt_df.shape)
     print(at_df.shape)
@@ -96,7 +96,7 @@ def relationship_level_may_have_bearing_on_response():
     # a composition graph would be misleading (at least for me) owing to the class imbalance
 
     # a comparison visualisation may be mildly instrumental owing to the class imbalance
-    originalDataFrame.pivot(columns="Relationship Level", values="Response").plot(kind="box")
+    original_data_frame.pivot(columns="Relationship Level", values="Response").plot(kind="box")
     plt.show()
     # interesting insight: highly below average values and highly above average values have a greater chance of being
     #                      off the mean of the dataset but the primary good responses come from people within 2-5 i.e.
@@ -108,15 +108,15 @@ def relationship_level_may_have_bearing_on_response():
 # QUALIFIED RELATIONSHIP INFERENCE OWING TO MAJOR CLASS IMBALANCE.
 # musical aptitude may have minor bearing on response.
 def musical_aptitude_may_have_minor_bearing_on_response():
-    print(originalDataFrame["Musical Aptitude"].value_counts())
+    print(original_data_frame["Musical Aptitude"].value_counts())
     # here we have a ginormous class imbalance
     # owing to the class imbalance the method below may be immensely frowned upon but I pursue it nonetheless
     # I divide the dataframe into two parts: a dataframe consisting of Participants with musical aptitude 0, and then
     #    the others.
-    mask_zero = originalDataFrame["Musical Aptitude"] == 0
-    mask_non_zero = originalDataFrame["Musical Aptitude"] > 0
-    df_zero = originalDataFrame[mask_zero]
-    df_non_zero = originalDataFrame[mask_non_zero]
+    mask_zero = original_data_frame["Musical Aptitude"] == 0
+    mask_non_zero = original_data_frame["Musical Aptitude"] > 0
+    df_zero = original_data_frame[mask_zero]
+    df_non_zero = original_data_frame[mask_non_zero]
 
     print(df_zero.shape)
     print(df_non_zero.shape)
@@ -150,15 +150,15 @@ def musical_aptitude_may_have_minor_bearing_on_response():
 
 # Musical Affinity may have minor bearing
 def musical_affinity_may_have_minor_bearing_on_response():
-    print(originalDataFrame["Musical Affinity"].value_counts().sort_values())
-    originalDataFrame[["Musical Affinity"]].plot(kind="hist")
+    print(original_data_frame["Musical Affinity"].value_counts().sort_values())
+    original_data_frame[["Musical Affinity"]].plot(kind="hist")
     plt.show()
     # from the histogram we can see we have a relatively minor class imbalance (look two on the x-axis)
 
-    mask_below_two = originalDataFrame["Musical Affinity"] < 2
-    df_bt = originalDataFrame[mask_below_two]
-    mask_above_equal_two = originalDataFrame["Musical Affinity"] >= 2
-    df_aet = originalDataFrame[mask_above_equal_two]
+    mask_below_two = original_data_frame["Musical Affinity"] < 2
+    df_bt = original_data_frame[mask_below_two]
+    mask_above_equal_two = original_data_frame["Musical Affinity"] >= 2
+    df_aet = original_data_frame[mask_above_equal_two]
 
     print(df_bt.shape)  # 48
     print(df_aet.shape)  # 65
@@ -181,7 +181,7 @@ def musical_affinity_may_have_minor_bearing_on_response():
 
     # for further exploration a box plot
     # all values above and equal to 2 assume 2 as their value, all values below assume 1
-    original_data_frame_copy = originalDataFrame.copy(deep=True)
+    original_data_frame_copy = original_data_frame.copy(deep=True)
 
     original_data_frame_copy.loc[mask_below_two, ["Musical Affinity"]] = 1
     original_data_frame_copy.loc[mask_above_equal_two, ["Musical Affinity"]] = 2
@@ -201,20 +201,20 @@ def musical_affinity_may_have_minor_bearing_on_response():
 #       were flawed. (This is surprising since I expected the correlation to be greater).
 def sensibilities_has_minor_bearing_on_response():  # both are >0.1 <0.5
     # the following scatter plot is obviously misleading owing to the class imbalance
-    plot = originalDataFrame.plot(kind="scatter", x="Sensibilities", y="Response")
+    plot = original_data_frame.plot(kind="scatter", x="Sensibilities", y="Response")
     plt.show()
 
-    print(originalDataFrame[["Sensibilities"]].value_counts())
+    print(original_data_frame[["Sensibilities"]].value_counts())
     print()
 
     # unsurprisingly, I run into the problem of class imbalance once again.
     # to resolve this the following will be done: every record above (and including) 2
     # will be treated the same; likewise will be done for below 2. the ratio imbalance is
     # ~2:1 so sample will be used to mitigate against this.
-    mask_upper = originalDataFrame["Sensibilities"] >= 2
-    usensible_df = originalDataFrame[mask_upper]
-    mask_lower = originalDataFrame["Sensibilities"] < 2
-    dsensible_df = originalDataFrame[mask_lower]
+    mask_upper = original_data_frame["Sensibilities"] >= 2
+    usensible_df = original_data_frame[mask_upper]
+    mask_lower = original_data_frame["Sensibilities"] < 2
+    dsensible_df = original_data_frame[mask_lower]
 
     # now if the means are sufficiently close to each other we will disregard sensibilities (we use means because
     # this time the data is relatively large)
@@ -241,18 +241,18 @@ def sensibilities_has_minor_bearing_on_response():  # both are >0.1 <0.5
 
 # To indicate that intelligence has no bearing on the response variable
 def intelligence_has_no_bearing_on_response():
-    normalise_response(originalDataFrame)
-    normalise_intelligence(originalDataFrame)
-    plot_intelligence = originalDataFrame["Intelligence"].plot(kind="hist", bins=10)
+    normalise_response(original_data_frame)
+    normalise_intelligence(original_data_frame)
+    plot_intelligence = original_data_frame["Intelligence"].plot(kind="hist", bins=10)
     plt.show()
-    plot_response = originalDataFrame["Response"].plot(kind="hist", bins=10)
+    plot_response = original_data_frame["Response"].plot(kind="hist", bins=10)
     plt.show()
     # As can be seen the distributions do not match. I was prompted to think a correlation might exist.
 
     # the following section pertaining to scatter involves a lot of drudgery, skip if you feel like it.
     # We plot a scatter to show a relation.
-    print(originalDataFrame.groupby("Intelligence")["Response"].value_counts())  # compare this with the graph
-    plot_scatter = originalDataFrame.plot(kind="scatter", x="Intelligence", y="Response")
+    print(original_data_frame.groupby("Intelligence")["Response"].value_counts())  # compare this with the graph
+    plot_scatter = original_data_frame.plot(kind="scatter", x="Intelligence", y="Response")
     plt.show()
     # as one can see from the scatter plot if a line of best fit were drawn its gradient would be > 1
     # BUT that would only be true since due to multiple mapping. There might be greater variance on the north-west
@@ -261,10 +261,10 @@ def intelligence_has_no_bearing_on_response():
     # here I show using simple aggregates that Intelligence does not have bearing.
     # I chose the median as the splitting point to approximately equally divide the values (they aren't equally
     # divided on account of the equals in one of the mask).
-    mask_under_median = originalDataFrame["Intelligence"] < originalDataFrame["Intelligence"].median()
-    mask_above_median = originalDataFrame["Intelligence"] >= originalDataFrame["Intelligence"].median()
-    df_below = originalDataFrame[mask_under_median]
-    df_above = originalDataFrame[mask_above_median]
+    mask_under_median = original_data_frame["Intelligence"] < original_data_frame["Intelligence"].median()
+    mask_above_median = original_data_frame["Intelligence"] >= original_data_frame["Intelligence"].median()
+    df_below = original_data_frame[mask_under_median]
+    df_above = original_data_frame[mask_above_median]
 
     print(df_below.shape)
     print(df_above.shape)
@@ -286,17 +286,17 @@ def intelligence_has_no_bearing_on_response():
 # QUALIFIED DUE TO CLASS IMBALANCE
 # to indicate that gender may have minor bearing on Response.
 def sex_may_have_minor_bearing_on_response():
-    print(originalDataFrame["Sex"].value_counts(normalize=True))
-    print(originalDataFrame["Sex"].value_counts())
+    print(original_data_frame["Sex"].value_counts(normalize=True))
+    print(original_data_frame["Sex"].value_counts())
     # as we can see ratio of men to women is ~4:1; this is a testament to the fact I got no rizz.
     # finding the median of the women and the men.
 
     print("\n")
 
-    male_mask = originalDataFrame["Sex"] == "Male"
-    df_male = originalDataFrame[male_mask]
-    female_mask = originalDataFrame["Sex"] == "Female"
-    df_female = originalDataFrame[female_mask]
+    male_mask = original_data_frame["Sex"] == "Male"
+    df_male = original_data_frame[male_mask]
+    female_mask = original_data_frame["Sex"] == "Female"
+    df_female = original_data_frame[female_mask]
 
     # using sampling and iteration
     mean_total = 0
@@ -311,7 +311,7 @@ def sex_may_have_minor_bearing_on_response():
 
     # we will now utilise a comparison visualisation i.e. a box plot to show that the difference. This is
     # done in spite of the huge class imbalance only fortifying the point.
-    originalDataFrame.pivot(columns="Sex", values="Response").plot(kind="box")
+    original_data_frame.pivot(columns="Sex", values="Response").plot(kind="box")
     plt.show()
     # a composition visualisation is not used on account of the class imbalance
 
@@ -325,28 +325,28 @@ def sex_may_have_minor_bearing_on_response():
 #       and the difference b/w the mean and median suggest.
 def multiple_exposure_may_have_bearing_on_response():
     # here the scatter plot is only slightly misleading.
-    plot = originalDataFrame.plot(kind="scatter", x="Multiple Exposure", y="Response")
+    plot = original_data_frame.plot(kind="scatter", x="Multiple Exposure", y="Response")
     plt.show()
 
-    print(originalDataFrame[["Multiple Exposure"]].value_counts())
+    print(original_data_frame[["Multiple Exposure"]].value_counts())
     # the difference b/w the two is 25 which is 25/113 ~= 0.22 of the total.
     # this argument is however insufficient by any standard
 
     # hence a stacked bar chart is made (despite the minor class imbalance)
-    originalDataFrame.groupby("Multiple Exposure")["Response"].value_counts().unstack().plot(kind="bar", stacked=True)
+    original_data_frame.groupby("Multiple Exposure")["Response"].value_counts().unstack().plot(kind="bar", stacked=True)
     plt.show()
     # note how the compositions suggest multiple exposure means a better response.
 
     # seeing that that may still be unconvincing, so we use another graph: box
-    originalDataFrame.pivot(columns="Multiple Exposure", values="Response").plot(kind="box")
+    original_data_frame.pivot(columns="Multiple Exposure", values="Response").plot(kind="box")
     plt.show()
     # the medians and the quartiles indicate a possible positive correlation.
 
     # calculating the median and mean (because the outliers are quite out there).
-    mask_true = originalDataFrame["Multiple Exposure"] == 1
-    true_df = originalDataFrame[mask_true]
-    mask_false = originalDataFrame["Multiple Exposure"] == 0
-    false_df = originalDataFrame[mask_false]
+    mask_true = original_data_frame["Multiple Exposure"] == 1
+    true_df = original_data_frame[mask_true]
+    mask_false = original_data_frame["Multiple Exposure"] == 0
+    false_df = original_data_frame[mask_false]
 
     print("The difference in their medians is " + str(
         true_df["Response"].median() - (false_df["Response"].median())))  # 0.5
@@ -359,14 +359,14 @@ def multiple_exposure_may_have_bearing_on_response():
 
 # to show the distribution of the response.
 def response_distribution():
-    plot = originalDataFrame["Response"].plot(kind="hist")
+    plot = original_data_frame["Response"].plot(kind="hist")
     plt.show()
 
 
 # to show the min-max normalisation of the response.
 def response_normalised_distribution():
-    normalise_response()
-    plot = originalDataFrame["Response"].plot(kind="hist")
+    normalise_response(original_data_frame)
+    plot = original_data_frame["Response"].plot(kind="hist")
     plt.show()
 
 
@@ -383,8 +383,8 @@ def relationship_sensibility_intelligence():
 
 # here we take the user input. and show them a visualisation.
 def choose():
-    global originalDataFrame
-    originalDataFrame = pd.read_excel("AliasedDataForAlgorithm.xlsx", sheet_name="data")
+    global original_data_frame
+    original_data_frame = pd.read_excel("AliasedDataForAlgorithm.xlsx", sheet_name="data")
     # this is done since some of the procedures invoke normalising functions.
     print("\n \n")
     global user_input

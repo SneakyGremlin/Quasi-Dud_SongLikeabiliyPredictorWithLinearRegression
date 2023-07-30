@@ -7,7 +7,7 @@ from preparation import prep_data
 pd.set_option("display.width", None)
 pd.set_option("display.max_rows", None)
 
-originalDataFrameNormalised, predictors_train, predictors_test, response_train, response_test = prep_data()
+original_data_frame_normalised, predictors_train, predictors_test, response_train, response_test = prep_data()
 
 
 # main method where the linear regression model resides. data has been explored and
@@ -17,7 +17,7 @@ def main():
     # this has been left empty on account of there being no viable model.
 
 
-# This Linear Regression model uses ALL the features except "Participant"
+# This Linear Regression model uses ALL the features aaaaexcept "Participant"
 def model_all_except_participant():
     relevant = ['Age Demographic', 'Relationship Level',
                 'Musical Aptitude', 'Musical Affinity', 'Sensibilities', 'Intelligence',
@@ -151,7 +151,6 @@ def model_e():
 
     print(model.score(predictors_test, response_test))
     print(model.coef_)
-
 
     response_predict = model.predict(predictors_test)
     print(mean_absolute_error(response_test, response_predict))
