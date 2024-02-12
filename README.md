@@ -1,3 +1,5 @@
+<b> 12-02-2024: after taking a statistical course and being somewhat grounded, I must say this project of mine was quite ambitious and I do believe that I just pursue it again after consulting with experts on the matter. For now, if you are reading this, know I have effectively "shelved" the matter and intend to return to it after I learn more about Machine Learning and perform a thorough analysis of the farcical assumptions I made and the methodologies I espoused. </b>
+
 # Linear Regression to predict Song Viability
 
 This project purports to use a fundamental Linear Regression Algorithm and certain attributes to predict how much an instance (in this case a person)
